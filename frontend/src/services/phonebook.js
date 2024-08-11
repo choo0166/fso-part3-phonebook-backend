@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// backend json-server
+// backend express server
 const baseUrl = "http://localhost:3001/api/persons"
 
 const getAll = () => {
