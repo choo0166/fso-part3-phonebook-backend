@@ -47,7 +47,8 @@ middlewares are called in the order of `use` statements
 Note: these will be called before the route event handlers. To
 call middleware on specific routes, specify them in the event 
 handler */
-app.use(cors())
+app.use(cors()) // allow cors from frontend if backend is hosted separately
+app.use(express.static('dist')) // allow serving of static assets from express
 app.use(express.json()) // use express json-parser for accessing json payloads in request body
 app.use(
   morgan(
