@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // backend express server
-const baseUrl = "http://localhost:3001/api/persons"
+const baseUrl = "/api/persons"
 
 const getAll = () => {
   return axios.get(baseUrl)
