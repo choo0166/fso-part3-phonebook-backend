@@ -14,8 +14,21 @@ mongoose.connect(connStr)
 
 // define schema for the document to be stored
 const contactSchema = new mongoose.Schema({
-  name: String,
-  number: String
+  name: {
+    type: String,
+    minLength: 3,
+    required: true
+  },
+  number: {
+    type: String,
+    validate: {
+      validator: (entry) => {
+        return '/^\+65(6|8|9)\d{7}$/'.test(entry)
+      },
+      message: props => `${props.value} is not a valid phone number.`
+    },
+    required: true
+  }
 })
 
 /* define model i.e. constructor function to create new objects 

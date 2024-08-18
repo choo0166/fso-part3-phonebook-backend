@@ -5,6 +5,11 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: "malformatted id" })
   }
 
+  if (error.name === "ValidationError") {
+    // handle mongoose validator exception
+    return response.status(400).json({ error: error.message })
+  }
+
   // execution continues to default Express error handler
   next(error) 
 }

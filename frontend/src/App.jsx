@@ -59,10 +59,7 @@ const App = () => {
             phoneService.getAll().then((response) => setPersons(response.data))
           })
           .catch((err) =>
-            setStatusMessage({
-              message: `Information of ${newName} has already been removed from server`,
-              isError: true,
-            })
+            setStatusMessage({ message: JSON.stringify(err), isError: true })
           )
           .finally(() => {
             setTimeout(

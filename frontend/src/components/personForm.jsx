@@ -1,4 +1,3 @@
-
 const PersonForm = ({
   inputName,
   inputNumber,
@@ -16,7 +15,9 @@ const PersonForm = ({
         <input value={inputNumber} onChange={numberInputChangeHandler} />
       </div>
       <div>
-        <button type="submit">add</button>
+        <button type="submit" disabled={!inputName || !inputNumber}>
+          add
+        </button>
       </div>
     </form>
   )

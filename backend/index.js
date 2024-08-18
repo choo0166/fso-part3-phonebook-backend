@@ -9,7 +9,6 @@ dotenv.config()
 const PORT = process.env.PORT || 3001
 const Contact = require("./models/contact")
 
-
 // morgan logging token for request body
 morgan.token("content-body", (request, response) => {
   return JSON.stringify(request.body)
@@ -28,9 +27,9 @@ call middleware on specific routes, specify them in the event
 handler */
 
 // allow serving of static assets from express
-app.use(express.static("dist")) 
+app.use(express.static("dist"))
 // use express json-parser for accessing json payloads in request body
-app.use(express.json()) 
+app.use(express.json())
 // morgan logger middleware
 app.use(
   morgan(
@@ -66,14 +65,18 @@ app.get("/api/persons/:id", (request, response, next) => {
       response.json(contact)
     })
     // execution continues to error handler middleware
-    .catch((error) => next(error)) 
+    .catch((error) => next(error))
 })
 
 app.put("/api/persons/:id", (request, response, next) => {
   const id = request.params.id
   const payload = request.body
 
-  Contact.findByIdAndUpdate(id, payload, { new: true })
+  Contact.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+    context: "query",
+  })
     .then((updatedContact) => {
       // return formatted object from transformed toJSON method
       response.json(updatedContact)
@@ -83,18 +86,6 @@ app.put("/api/persons/:id", (request, response, next) => {
 
 app.post("/api/persons", (request, response, next) => {
   const payload = request.body
-
-  if (!payload.name) {
-    return response.status(400).json({
-      error: "missing name in request body",
-    })
-  }
-
-  if (!payload.number) {
-    return response.status(400).json({
-      error: "missing number in request body",
-    })
-  }
 
   const newContact = new Contact({
     name: payload.name,
