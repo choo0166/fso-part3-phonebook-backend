@@ -59,7 +59,7 @@ const App = () => {
             phoneService.getAll().then((response) => setPersons(response.data))
           })
           .catch((err) =>
-            setStatusMessage({ message: JSON.stringify(err), isError: true })
+            setStatusMessage({ message: err.response.data.error, isError: true })
           )
           .finally(() => {
             setTimeout(
@@ -83,7 +83,7 @@ const App = () => {
           setPersons((oldPersons) => oldPersons.concat(response.data))
         })
         .catch((err) =>
-          setStatusMessage({ message: JSON.stringify(err), isError: true })
+          setStatusMessage({ message: err.response.data.error, isError: true })
         )
         .finally(() => {
           setTimeout(
